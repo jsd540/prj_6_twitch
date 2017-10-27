@@ -1,0 +1,117 @@
+
+// list of active users from twitch
+
+var userNameList = ['riotgames','syndicate','summit1g','esl_csgo',
+'esltv_cs','nightblue3','imaqtpie','lirikk','lirik','sodapoppin',
+'meclipse','cretetion', 'shroud','officialbjergsen','wolves_bjergsen',
+'theoriginalweed','joshog','freecodecamp','Tsm_dyrus','dyrus','gosu',
+'dreamhackcs','timthetatman','ESL_SC2', 'captainsparklez','goldglove','boxbox',
+'speeddemosarchivesda','gamesdonequick','sgdq','trick2g','nl_kripp','castro_1021',
+'swiftor','c9sneaky','storbeck', 'doublelift_renamed300203','doublelift',
+'drdisrespectlive','OgamingSC2', 'sivhd','iijeriichoii','faceittv','Faceit',
+'faker','tsm_theoddone','izakooo','pewdiepie','eleaguetv','amazhs','Voyboy',
+'cohhcarnage','%63ohhcarnage','pashabiceps','anomalyxd','ungespielt',
+'Tsm_doublelift','mlg_live','mlg','trumpsc','trump','pgl','loltyler1',
+'omgitsfirefoxx','kinggothalion','habathcx', 'thenadeshot','nadeshot',
+'kittyplaysgames','kittyplays','yoda','stonedyooda','RobotCaleb', 'GiantWaffle',
+'Gronkh','bobross','nick28t','noobs2ninjas', 'gassymexican','monstercat','cryaotic',
+'montanablack88','a_seagull','m0e_tv','reckful','kaypealol','sovietwomble',
+'ProfessorBroman','nickbunyun','nalcs1','starladder5','twitch','e3','tsm_bjergsen',
+'forsenlol','yogscast','rewinside','zeeoon','legendarylea','markiplier',
+'dansgaming','pokimane','froggen','olofmeister','towelliee','aphromoo',
+'ninja','streamerhouse'];
+
+// userNameList array size.
+
+var size = userNameList.length;
+
+$(document).ready(function(){
+
+// active on click button
+
+	// $("button").click(function(){
+	//   $("button").removeClass("active");
+	//   $(this).addClass("active");
+	// });
+
+// listen for a button click to call function
+
+
+	// iterate the userNameList array
+	// and get necessary data for each user
+
+	for(var i = 0; i < size; i++){
+
+		// construct the url
+
+		var user_name = userNameList[i];
+		var user_url = 'https://wind-bow.gomix.me/twitch-api/users/';
+
+		user_url += user_name + '?callback=?';
+
+		$.getJSON(user_url, function (user_data) {
+	
+		var name = user_data.display_name; 	// twitch streamer user name
+		var name2 = user_data.name; 	   	// twitch user name to be sent to isItLive
+		var logo = user_data.logo; 			// streamer logo image
+		var bio = user_data.bio;			// streamer bio
+
+		if (bio == null){ // handle null bio case
+			bio = 'no bio available';
+		}
+		else{ // if bio is too long limit size 
+			bio = bio.substring(0,125) + "...";
+		}
+		// send data to isItLive
+
+		isItLive(name, name2, logo, bio);
+
+		});		
+	}
+
+});
+
+// this function finds out weather the streamer is 
+// currently live or if they are off the air.
+
+function isItLive(name, name2, logo, bio){
+
+	var user_stream_url = 'https://www.twitch.tv/' + name2; // cunstruct user stream url
+
+	// construct url
+
+	var stream_url = 'https://wind-bow.gomix.me/twitch-api/streams/';
+
+	stream_url += name2 + '?callback=?';
+
+	$.getJSON(stream_url, function(liveOrNot){
+
+		// if the streamer is off the air liveOrNot returns null
+		// else streamer is currently on the air
+
+		if (liveOrNot.stream != null){
+			
+		console.log(name + "  " + bio + " On-line now!");
+
+
+		}
+		else{
+			
+		 console.log(name + " " + bio + " Off-line!");
+
+		}
+	
+	});
+
+};
+
+
+
+
+
+
+
+
+
+
+
