@@ -92,7 +92,7 @@ function makeItWork(display_name, logo, bio, live){
 		if(live != false){
 
 			new_live.setAttribute('id','stream_status_live');
-			onAir = 'imgs/plus.png'
+			onAir = 'https://s1.postimg.org/35krvupzm7/plus.png'
 			liveArray.push(display_name);
 			allUsersArray.push(display_name);
 
@@ -100,13 +100,13 @@ function makeItWork(display_name, logo, bio, live){
 		else{
 
 			new_live.setAttribute('id','stream_status_notLive');
-			onAir = 'imgs/minus.png'
+			onAir = 'https://s1.postimg.org/2xqra9l7bj/minus.png'
 			notLiveArray.push(display_name);
 			allUsersArray.push(display_name);
 		}
 
 		if(!logo){
-			logo = 'imgs/murray.jpg';
+			logo = 'https://s1.postimg.org/1j1xzq09pb/murray.jpg';
 		}
 		
 		var user_page = 'https://www.twitch.tv/' + display_name; // url to users stream
